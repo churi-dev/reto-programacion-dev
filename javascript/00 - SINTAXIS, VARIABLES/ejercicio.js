@@ -72,10 +72,11 @@ let nameUserGitHub = "churi-dev";
 const LAST_NAME = "Churivanti";
 
 // Crea variables representando todos los tipos de datos primitivos del lenguaje (cadenas de texto, enteros, booleanos...).
-let ageUser = 20;
-let userName = "Juan";
-let isTrue = true;
-let number;
+let ageUser = 20; // entero
+let userName = "Juan"; // cadena
+let decimalNumer = 20.40; // decimal
+let isTrue = true; // booleano
+let number; // undefined
 
 // Imprime por terminal el texto: "¡Hola, [y el nombre de tu lenguaje]!"
 let textMessage = `!Hola, Javacript - 2025`;
