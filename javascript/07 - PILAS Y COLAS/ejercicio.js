@@ -88,6 +88,10 @@ console.log(`Atendido: ${cola.deQue()}`);
 // Primer valor
 console.log(`Siguiente: ${cola.front()}`);
 
+import readline from "readline";
+
+let read = readline.createInterface({ input: process.stdin, output: process.stdout });
+
 /*
 Utilizando la implementación de pila y cadenas de texto, simula el mecanismo adelante/atrás
  *   de un navegador web. Crea un programa en el que puedas navegar a una página o indicarle
@@ -96,3 +100,92 @@ Utilizando la implementación de pila y cadenas de texto, simula el mecanismo ad
  *   el nombre de una nueva web.
 */
 
+let atras = [];
+let adelante = [];
+
+function navegador_web() {
+    read.question('Ingrese Url o escribe "adelante", "atras" o "salir": ', (res) => {
+        let input = res.trim().toLowerCase();
+
+        switch(input) {
+        case 'adelante':
+            atras.push(adelante.pop());
+            currentPage(atras);
+            navegador_web();
+            break;
+        case 'atras':
+            if (isEmpty(atras)) {
+                currentPage(atras);
+                navegador_web();
+            } else {
+                adelante.push(atras.pop())
+                currentPage(atras);
+                navegador_web();
+            }
+            break;
+
+        case 'salir':
+            read.close();
+            break;
+        default: 
+            atras.push(input);
+            currentPage(atras);
+            navegador_web();
+            break;
+        }
+    });
+
+}
+
+function isEmpty(pila) {
+    return pila.length === 0;
+}
+
+function currentPage(pila) {
+    return isEmpty(pila) ? console.log("Estás en la pagina de inicio") : console.log(`Estas en la web ${pila[pila.length - 1]}`);
+}
+
+
+/*
+Utilizando la implementación de cola y cadenas de texto, simula el mecanismo de una
+ *   impresora compartida que recibe documentos y los imprime cuando así se le indica.
+ *   La palabra "imprimir" imprime un elemento de la cola, el resto de palabras se
+ *   interpretan como nombres de documentos. 
+*/
+
+
+let documentos = [];
+function imprimerDocumentos() {
+    read.question('Escribe "imprimr", "salir" o registra el nombre de tu documento: ', (res) => {
+        let input = res.trim().toLowerCase();
+        if (input.length === 0) {
+            console.log("Ingrese valor de formulario.");
+            imprimerDocumentos();
+        } else {
+            switch(input) {
+            case 'salir': 
+                read.close();
+                break;
+            case 'imprimir':
+                printDoc(documentos);
+                imprimerDocumentos();
+                break;
+            default:
+                documentos.push(input);
+                console.log(documentos);
+                imprimerDocumentos();
+                break;
+            }
+        }
+        
+        
+    });
+}
+
+function docIsEmpty(cola) {
+    return cola.length === 0;
+}
+
+function printDoc(cola) {
+    return docIsEmpty(cola) ? console.log("No hay doc para imprimir") : console.log(`Imprimiendo doc: ${cola.shift()}`);
+}
